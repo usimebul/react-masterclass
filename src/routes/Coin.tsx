@@ -36,12 +36,13 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.OverviewBgColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -73,7 +74,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.OverviewBgColor};
   border-radius: 10px;
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
@@ -82,6 +83,42 @@ const Tab = styled.span<{ isActive: boolean }>`
     display: block;
   }
 `;
+
+const BackBtn = styled.span`
+  position: absolute;
+  left: 0;
+  align-self: center;
+  height: 4vh;
+  width: 4vh;
+  border-radius: 50%;
+  border: none;  
+  background-color: ${(props) => props.theme.accentColor};
+  cursor: pointer;
+  a {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover{
+    box-shadow: 3px 3px 5px 1px rgba(0,0,0,0.5);    
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -0.5vh;
+    margin-top: -0.5vh;
+    height: 1vh;
+    width: 1vh;
+    border: 5px solid ${(props) => props.theme.textColor};
+    border-right: none;
+    border-top: none;
+    transform: rotate(45deg);
+  }
+`
 
 interface RouteParams {
   coinId: string;
@@ -169,6 +206,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <BackBtn>
+          <Link to={`/${path}`}></Link>
+        </BackBtn>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { useContext } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ContextPath from "./context";
 import Coin from "./routes/Coin";
