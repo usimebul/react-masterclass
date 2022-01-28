@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import ContextPath from "../context";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -63,7 +65,12 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {
+interface CoinsProp {
+  contextPath: string
+}
+
+function Coins({ contextPath }: CoinsProp) {
+  const path = useContext<string>(ContextPath);
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
@@ -81,7 +88,7 @@ function Coins() {
             <Coin key={coin.id}>
               <Link
                 to={{
-                  pathname: `/${coin.id}`,
+                  pathname: `${path}/${coin.id}`,
                   state: { name: coin.name },
                 }}
               >
